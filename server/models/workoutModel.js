@@ -12,8 +12,9 @@ const workoutSchema = new mongoose.Schema({
     loads : {
         type : Number,
         required : true
-    }
-});
+    },
+    
+},{timestamps : true});
 
 const Workout = mongoose.model("Workout", workoutSchema);
 
