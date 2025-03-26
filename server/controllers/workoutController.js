@@ -46,8 +46,8 @@ const editWorkout = async (req, res) => {
   }
 };
 
-//Dwlete workout
 
+//Delete workout
 const deleteWorkout = async (req, res) => {
   try {
     const id = req.params.id;

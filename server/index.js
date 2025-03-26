@@ -1,6 +1,6 @@
 require("../server/dB/connection"); //DB connection
 const workoutRoutes = require('./routes/workoutRoutes'); //Routes connection
-const cors = require('cors');
+const cors = require('cors'); //cors connection
 
 
 const express = require('express');
