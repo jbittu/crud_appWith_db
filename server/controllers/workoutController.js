@@ -52,7 +52,7 @@ const deleteWorkout = async (req, res) => {
   try {
     const id = req.params.id;
     const deleteWorkout = await Workout.findByIdAndDelete({ _id: id });
-    res.ststus(200).json(deleteWorkout);
+    res.status(200).json(deleteWorkout);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

@@ -34,6 +34,18 @@ const createWorkoutData = async (e) => {
   getWorkouts();
   setForm({ title: "", reps: "", loads: "" });
 }
+
+//DELETE REQUEST
+const deleteWorkout = async (id) => {
+  try {
+    await axios.delete(`http://localhost:8000/api/workout/${id}`);
+    
+    getWorkouts();
+  } catch (err) {
+    console.error(err);
+  }
+};
+
   return (
     <div className="App">
       <form onSubmit={createWorkoutData}>
@@ -53,6 +65,7 @@ const createWorkoutData = async (e) => {
               <h1>{item.title}</h1>
               <p>{item.reps}</p>
               <p>{item.loads}</p>
+              <button onClick={() => deleteWorkout(item._id)}>Delete</button>
             </div>
           );
         })}
