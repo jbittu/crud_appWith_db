@@ -1,0 +1,14 @@
+nav{
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: gray;
+}
+nav .menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
