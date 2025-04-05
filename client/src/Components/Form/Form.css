@@ -1,0 +1,56 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-light);
+}
+
+.form h1{
+    font-size: 2rem;
+    color: var(--error);
+    text-align: center;
+}
+.form .form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    
+}
+.form .field{
+    width: 100%;
+}
+
+.form label{
+    display: block;
+    font-size: 1.2rem;
+}
+.form input{
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid rebeccapurple;
+    font-size: 1rem;
+}
+
+.form button{
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: rebeccapurple;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.form button:hover{
+    background-color: green;
+    color: rgb(229, 224, 235);
+    border: 1px solid rebeccapurple;
+}

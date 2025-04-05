@@ -5,6 +5,22 @@ nav{
     justify-content: space-around;
     align-items: center;
     background-color: gray;
+    padding: 0 2rem;
+}
+a h1{
+    font-size: 2rem;
+    font-weight: 600;
+    color: rgb(31, 28, 28);
+    text-transform: uppercase;
+}
+a{
+    border: 1px solid black;
+    padding: 0.5rem 1rem;
+}
+a:hover{
+    background-color: rgb(55, 141, 221);
+    color: white;
+    transition: all 0.3s ease-in-out;
 }
 nav .menu{
     display: flex;
