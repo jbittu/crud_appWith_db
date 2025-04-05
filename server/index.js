@@ -1,3 +1,5 @@
+require('dotenv').config(); //dotenv connection
+
 require("../server/dB/connection"); //DB connection
 const cors = require('cors'); //cors connection
 
