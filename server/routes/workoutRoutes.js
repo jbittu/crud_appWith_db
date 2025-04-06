@@ -1,5 +1,7 @@
 const express = require("express");
 
+const { authUser } = require("../middleware/userMiddleware"); // require the middleware
+
 const Workout = require("../models/workoutModel"); // require the model
 
 const {
@@ -10,7 +12,11 @@ const {
   deleteWorkout,
 } = require("../controllers/workoutController"); // require the controllers
 
+
+
 const router = express.Router();
+
+router.use(authUser); // apply the middleware to all routes in this router
 
 //Get entire workout list
 router.get("/", getWorkout);
