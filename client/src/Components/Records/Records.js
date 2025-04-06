@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext } from "react";
-import { Data } from "../../Contex/WorkOutContex";
+import { Data } from "../../Context/WorkOutContex";
 import "./Records.css";
 
 const Records = () => {
