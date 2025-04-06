@@ -17,6 +17,9 @@ nav .logout button{
     border-radius: 50px;
     text-decoration: none;
 }
+nav .logout samp {
+    margin-right: 10px;
+}
 .menu a h1{
     font-size: 2rem;
     font-weight: 600;
