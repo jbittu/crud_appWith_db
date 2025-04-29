@@ -1,5 +1,4 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { Data } from "../../Context/WorkOutContex";
 import "./Form.css";
 
@@ -7,7 +6,7 @@ const Form = () => {
   const {
     form,
     createWorkoutData,
-    handleFormFiel,
+    handleFormField,
     updateForm,
     updateWorkoutData,
     handleUpdateForm,
@@ -15,49 +14,55 @@ const Form = () => {
 
   return (
     <div>
-      <div className="form">
-        {!updateForm._id && (
+      {/* Create Workout Form */}
+      {!updateForm._id && (
+        <div className="form">
           <form className="form" onSubmit={createWorkoutData}>
-            <h1> Create Workout Prep</h1>
+            <h1>Create Workout Prep</h1>
+
             <div className="field">
               <label>Exercise</label>
               <input
                 type="text"
                 name="title"
                 value={form.title}
-                onChange={handleFormFiel}
+                onChange={handleFormField}
               />
             </div>
+
             <div className="field">
               <label>Reps</label>
               <input
-                type="tel"
+                type="number"
                 name="reps"
                 value={form.reps}
-                onChange={handleFormFiel}
+                onChange={handleFormField}
               />
             </div>
+
             <div className="field">
               <label>Loads (in KG)</label>
               <input
-                type="tel"
+                type="number"
                 name="loads"
                 value={form.loads}
-                onChange={handleFormFiel}
+                onChange={handleFormField}
               />
             </div>
 
-            <button>Submit</button>
+            <button type="submit">Submit</button>
           </form>
-        )}
-      </div>
+        </div>
+      )}
 
-      <div className="form">
-        {updateForm._id && (
+      {/* Update Workout Form */}
+      {updateForm._id && (
+        <div className="form">
           <form className="form" onSubmit={updateWorkoutData}>
-            <h1> Update Workout Prep</h1>
+            <h1>Update Workout Prep</h1>
+
             <div className="field">
-              <label>Excercise</label>
+              <label>Exercise</label>
               <input
                 type="text"
                 name="title"
@@ -65,29 +70,31 @@ const Form = () => {
                 onChange={handleUpdateForm}
               />
             </div>
+
             <div className="field">
               <label>Reps</label>
               <input
-                type="tel"
+                type="number"
                 name="reps"
                 value={updateForm.reps}
                 onChange={handleUpdateForm}
               />
             </div>
+
             <div className="field">
               <label>Loads (in KG)</label>
               <input
-                type="tel"
+                type="number"
                 name="loads"
                 value={updateForm.loads}
                 onChange={handleUpdateForm}
               />
             </div>
 
-            <button>Update Prep</button>
+            <button type="submit">Update Prep</button>
           </form>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

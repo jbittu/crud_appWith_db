@@ -17,7 +17,7 @@ nav .logout button{
     border-radius: 50px;
     text-decoration: none;
 }
-nav .logout samp {
+nav .logout span {
     margin-right: 10px;
 }
 .menu a h1{

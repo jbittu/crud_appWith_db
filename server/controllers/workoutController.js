@@ -2,8 +2,11 @@ const Workout = require("../models/workoutModel");
 
 // Get all workout data
 const getWorkout = async (req, res) => {
+  
   try {
-    const workoutDatas = await Workout.find().sort({ createdAt: -1 });
+    const user_id = req.user._id;
+    console.log("User ID in getWorkout:", user_id);
+    const workoutDatas = await Workout.find({user_id}).sort({ createdAt: -1 });
     res.status(200).json(workoutDatas);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -22,8 +25,12 @@ const getWorkoutById = async (req, res) => {
 
 //create workout
 const createWorkout = async (req, res) => {
+   const { title, reps, loads } = req.body;
+   
   try {
-    const newWorkout = new Workout(req.body);
+    const user_id = req.user._id; //  user ID from authentication middleware
+
+    const newWorkout = new Workout({title, reps, loads, user_id});
     const savedWorkout = await newWorkout.save();
     res.status(201).json(savedWorkout);
   } catch (err) {

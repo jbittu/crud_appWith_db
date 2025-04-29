@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { authUser } = require("../middleware/userMiddleware"); // require the middleware
+const  authUser  = require("../middleware/userMiddleware"); // require the middleware
 
 const Workout = require("../models/workoutModel"); // require the model
 

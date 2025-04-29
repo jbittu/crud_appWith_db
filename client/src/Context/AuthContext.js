@@ -1,22 +1,21 @@
-import { createContext, useReducer , useEffect} from "react";
+import { createContext, useReducer, useEffect } from "react";
 
 export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      return { ...state, user: action.payload };
+      return { user: action.payload };
     case "LOGOUT":
-      return { ...state, user: null };
+      return { user: null };
     default:
       return state;
   }
 };
 
- export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
-    
   });
 
   useEffect(() => {
@@ -25,6 +24,7 @@ export const authReducer = (state, action) => {
       dispatch({ type: "LOGIN", payload: user });
     }
   }, []);
+
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>
       {children}
@@ -32,4 +32,4 @@ export const authReducer = (state, action) => {
   );
 };
 
-export default AuthContext.Provider;
+export default AuthProvider;  // Default export the provider

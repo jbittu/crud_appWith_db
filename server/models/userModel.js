@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
+
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -18,14 +19,11 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    
-},{timestamps: true});
+}, { timestamps: true });
 
-
-//static singnup function
-
+// Static signup function
 userSchema.statics.signup = async function(email, password, name) {
-    //validation
+    // Validation
     if (!email || !password || !name) {
         throw Error('All fields must be filled');
     }
@@ -43,14 +41,13 @@ userSchema.statics.signup = async function(email, password, name) {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    const user = await User.create({ email, password:hash, name });
+    const user = await this.create({ email, password: hash, name });
     return user;
+};
 
-}
-
-//static login function
+// Static login function
 userSchema.statics.login = async function(email, password) {
-    //validation
+    // Validation
     if (!email || !password) {
         throw Error('All fields must be filled');
     }
@@ -63,7 +60,7 @@ userSchema.statics.login = async function(email, password) {
         throw Error('Incorrect email or password');
     }
     return user;
-}
+};
 
 const User = mongoose.model('User', userSchema);
 

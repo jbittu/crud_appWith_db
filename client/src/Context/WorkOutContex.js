@@ -1,53 +1,83 @@
-import React from "react";
-import { useState, useEffect, createContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  createContext,
+  useCallback
+} from "react";
 import axios from "axios";
+import { useAuthContext } from "../Hooks/useAuthContext";
+
 export const Data = createContext();
 
+const WorkOutContext = ({ children }) => {
+  const [workouts, setWorkouts] = useState(null);
+  const { user } = useAuthContext();
 
-const WorkOutContex = ({ children }) => {
-//GET REQUEST
-  const [workouts, setWorkouts] = useState(null); //state for geting data from the server
+  // Fetch workouts
+  const getWorkouts = useCallback(async () => {
+    if (!user?.token) return;
 
-  const getWorkouts = async () => {
-    const response = await axios.get("http://localhost:8000/api/workout");
-    if (response.status !== 200) {
-      throw new Error("Failed to fetch data");
+    try {
+      const response = await axios.get("http://localhost:8000/api/workout", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      setWorkouts(response.data);
+    } catch (error) {
+      console.error("Failed to fetch workouts:", error.response?.data || error.message);
     }
-    setWorkouts(response.data);
-  };
+  }, [user]);
+
   useEffect(() => {
     getWorkouts();
-  }, []);
-  //POST REQUEST
+  }, [getWorkouts]);
+
+  // Form states
   const [form, setForm] = useState({
     title: "",
     reps: "",
     loads: "",
   });
-  const handleFormFiel = (e) => {
+
+  const handleFormField = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
   const createWorkoutData = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8000/api/workout", form);
-    // console.log(response.data);
-    getWorkouts();
-    setForm({ title: "", reps: "", loads: "" });
+    if (!user?.token) return;
+
+    try {
+      await axios.post("http://localhost:8000/api/workout", form, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      getWorkouts();
+      setForm({ title: "", reps: "", loads: "" });
+    } catch (err) {
+      console.error(err.response?.data || err.message);
+    }
   };
 
-  //DELETE REQUEST
+  // Delete
   const deleteWorkout = async (id) => {
-    try {
-      await axios.delete(`http://localhost:8000/api/workout/${id}`);
+    if (!user?.token) return;
 
+    try {
+      await axios.delete(`http://localhost:8000/api/workout/${id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       getWorkouts();
     } catch (err) {
       console.error(err);
     }
   };
 
-  //UPDATE REQUEST
-
+  // Update
   const [updateForm, setUpdateForm] = useState({
     _id: null,
     title: "",
@@ -58,44 +88,62 @@ const WorkOutContex = ({ children }) => {
   const handleUpdateForm = (e) => {
     setUpdateForm({ ...updateForm, [e.target.name]: e.target.value });
   };
+
   const toggleUpdate = async (id) => {
-    const response = await axios.get(`http://localhost:8000/api/workout/${id}`);
-    setUpdateForm(response.data);
+    try {
+      const response = await axios.get(`http://localhost:8000/api/workout/${id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      setUpdateForm(response.data);
+    } catch (err) {
+      console.error(err);
+    }
   };
+
   const updateWorkoutData = async (e) => {
     e.preventDefault();
+    if (!updateForm._id || !user?.token) return;
+
     try {
-      await axios.patch(`http://localhost:8000/api/workout/${updateForm._id}`, updateForm);
+      await axios.patch(
+        `http://localhost:8000/api/workout/${updateForm._id}`,
+        updateForm,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
       getWorkouts();
       setUpdateForm({ _id: null, title: "", reps: "", loads: "" });
     } catch (error) {
       console.error(error);
     }
   };
-  return (
-    <>
-      <Data.Provider
-        value={{
-          workouts,
-          setWorkouts,
-          form,
-          setForm,
-          updateForm,
-          setUpdateForm,
-          getWorkouts,
-          deleteWorkout,
-          toggleUpdate,
-          handleFormFiel,
-          updateWorkoutData,
-          handleUpdateForm,
-          createWorkoutData
 
-        }}
-      >
-        {children}
-      </Data.Provider>
-    </>
+  return (
+    <Data.Provider
+      value={{
+        workouts,
+        setWorkouts,
+        form,
+        setForm,
+        updateForm,
+        setUpdateForm,
+        getWorkouts,
+        deleteWorkout,
+        toggleUpdate,
+        handleFormField,
+        updateWorkoutData,
+        handleUpdateForm,
+        createWorkoutData,
+      }}
+    >
+      {children}
+    </Data.Provider>
   );
 };
 
-export default WorkOutContex;
+export default WorkOutContext;

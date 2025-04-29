@@ -1,17 +1,20 @@
 import { useAuthContext } from "./useAuthContext";
+import { useNavigate } from "react-router-dom"; // Use useNavigate instead of useHistory
 
 export const useLogout = () => {
   const { dispatch } = useAuthContext();
-
-  //remove data from local storage
+  const navigate = useNavigate(); // Get the navigate function
 
   const logout = () => {
-    // remove user from local storage
+    // Remove user data from localStorage
     localStorage.removeItem("user");
 
-    // dispatch logout action
+    // Dispatch the logout action
     dispatch({ type: "LOGOUT" });
-  }
+
+    // Redirect to the login page after logging out
+    navigate("/login");  // Redirect to the login page
+  };
+
   return { logout };
 };
-
